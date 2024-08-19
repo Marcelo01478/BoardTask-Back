@@ -1,18 +1,15 @@
 async function authDocProducao(req, res, next) {
-    const { senhaDigitada} = req.body;
+    const { senhaDigitada } = req.body;
 
-    
     if(req.headers.host.includes("localhost") || req.originalUrl !== "/doc/"){
-        // Usuario esta no localhost
+        // Usuario está no localhost 
         return next();
     }
 
-
-    if(senhaDigitada ===process.env.SWAGGER_SENHA_DOC){
+    if(senhaDigitada === process.env.SWAGGER_SENHA_DOC){
         // Usuario digitou a senha certa
         return next();
     }
-
 
     if(senhaDigitada){
         // Usuario digitou a senha errada
@@ -26,15 +23,15 @@ async function authDocProducao(req, res, next) {
             </form>
         `))
     } else{
-         // Usuario ainda não digitou a senha e está em modo produção
-         res.status(200).set('Content-Type', 'text/html');
-         res.send(Buffer.from(`
-             <form method="post">
-                 <label for="senhaDigitada">Senha da documentação:</label>
-                 <input type="password" name="senhaDigitada" id="senhaDigitada" />
-                 <button type="submit">Entrar</button>
-             </form>
-         `))
+        // Usuario ainda não digitou a senha e está em modo produção
+        res.status(200).set('Content-Type', 'text/html');
+        res.send(Buffer.from(`
+            <form method="post">
+                <label for="senhaDigitada">Senha da documentação:</label>
+                <input type="password" name="senhaDigitada" id="senhaDigitada" />
+                <button type="submit">Entrar</button>
+            </form>
+        `))
     }
 }
 
